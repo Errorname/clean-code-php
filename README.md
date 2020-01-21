@@ -1276,7 +1276,7 @@ class Car
     {
         $this->make = $make;
 
-	// NOTE: Renvoi this pour le chaînage
+	// NOTE: Renvoie this pour le chaînage
         return $this;
     }
 
@@ -1284,7 +1284,7 @@ class Car
     {
         $this->model = $model;
 
-        // NOTE: Renvoi this pour le chaînage
+        // NOTE: Renvoie this pour le chaînage
         return $this;
     }
 
@@ -1292,7 +1292,7 @@ class Car
     {
         $this->color = $color;
 
-        // NOTE: Renvoi this pour le chaînage
+        // NOTE: Renvoie this pour le chaînage
         return $this;
     }
 
