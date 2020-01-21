@@ -1276,7 +1276,7 @@ class Car
     {
         $this->make = $make;
 
-		// NOTE: Renvoi this pour le chaînage
+	// NOTE: Renvoi this pour le chaînage
         return $this;
     }
 
