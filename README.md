@@ -680,7 +680,7 @@ Le point principal est d'éviter les pièges classique comme partager un état e
 **Mauvais:**
 
 ```php
-// Variable globale référencé par la fonction suivante.
+// Variable globale référencée par la fonction suivante.
 // Si nous avions une autre fonction qui l'utilise, ce serait maintenant un tableau et ça pourrait le casser.
 $name = 'Ryan McDermott';
 
@@ -1171,7 +1171,7 @@ Vous pourriez vous demander alors: "Quand dois-je utiliser l'héritage ?" Cela d
 
 1. Votre héritage représente une relation "est-un" et non une relation "a-un" (Humain->Animal vs. Utilisateur->DetailsUtilisateur).
 2. Vous pouvez réutiliser du code de la classe de base (Les humains peuvent se déplacer comme les animaux).
-3. Vous voulez effectuer des modifications globale aux classes dérivées en changeant la classe de base. (Changer la dépense calorique de tous les animaux quand ils se déplacent).
+3. Vous voulez effectuer des modifications globales aux classes dérivées en changeant la classe de base. (Changer la dépense calorique de tous les animaux quand ils se déplacent).
 
 **Mauvais:**
 
