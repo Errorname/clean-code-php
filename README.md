@@ -16,7 +16,10 @@ Traduction en français de [Clean Code PHP](https://github.com/jupeter/clean-cod
      * [Éviter les cartes mentales](#Éviter-les-cartes-mentales)
      * [Ne pas ajouter de contexte inutile](#ne-pas-ajouter-de-contexte-inutile)
      * [Utiliser des arguments par défaut à la place des court-circuits ou des conditions](#utiliser-des-arguments-par-défaut-à-la-place-des-court-circuits-ou-des-conditions)
-  3. [Fonctions](#fonctions)
+  3. [Comparaison](#comparaison)
+     * [Utiliser les comparaisons identiques](#Utiliser-les-comparaisons-identiques)
+     * [L'opérateur Null coalescent](#Lopérateur-null-coalescent)
+  4. [Fonctions](#fonctions)
 	 * [Arguments de fonction (idéalement 2 ou moins)](#arguments-de-fonction-idéalement-2-ou-moins)
 	 * [Les fonctions doivent faire une seule chose](#les-fonctions-doivent-faire-une-seule-chose)
      * [Les noms de fonction doivent dire ce qu'elles font](#les-noms-de-fonction-doivent-dire-ce-quelles-font)
@@ -31,20 +34,21 @@ Traduction en français de [Clean Code PHP](https://github.com/jupeter/clean-cod
      * [Éviter la vérification de type (partie 1)](#Éviter-la-vérification-de-type-partie-1)
      * [Éviter la vérification de type (partie 2)](#Éviter-la-vérification-de-type-partie-2)
 	 * [Retirer le code mort](#retirer-le-code-mort)
-  4. [Objets et Structures de Données](#objets-et-structures-de-données)
+  5. [Objets et Structures de Données](#objets-et-structures-de-données)
 	 * [Utiliser l'encapsulation en objet](#utiliser-lencapsulation-en-objet)
 	 * [Faire des objets avec des membres privés/protégés](#faire-des-objets-avec-des-membres-privésprotégés)
-  5. [Classes](#classes)
+  6. [Classes](#classes)
 	 * [Préférer la composition à l'héritage](#préférer-la-composition-à-lhéritage)
 	 * [Éviter le chaînage des méthodes](#Éviter-le-chaînage-des-méthodes)
-  6. [SOLID](#solid)
+	 * [Préférer les classes finales](#Préférer-les-classes-finales)
+  7. [SOLID](#solid)
      * [Principe de Responsabilité Unique](#principe-de-responsabilité-unique)
      * [Principe Ouvert/Fermé](#principe-ouvertfermé)
      * [Principe de Substitution de Liskov](#principe-de-substitution-de-liskov)
      * [Principe de Ségrégation des Interfaces](#principe-de-ségrégation-des-interfaces)
      * [Principe d'Inversion des Dépendances](#principe-dinversion-des-dépendances)
-  7. [Ne vous répétez pas (DRY)](#ne-vous-répétez-pas-dry)
-  8. [Traductions](#traductions)
+  8. [Ne vous répétez pas (DRY)](#ne-vous-répétez-pas-dry)
+  9. [Traductions](#traductions)
 
 ## Introduction
 
@@ -376,6 +380,70 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 ```
 
 **[⬆ retour en haut](#table-des-matières)**
+
+## Comparaison
+
+### Utiliser les [comparaisons identiques](http://php.net/manual/fr/language.operators.comparison.php)
+
+**Pas bien :**
+
+La comparaison simple convertit la chaîne de caractères en un nombre entier.
+
+```php
+$a = '42';
+$b = 42;
+
+if ($a != $b) {
+    // Sera toujours valide
+}
+```
+
+La comparaison `$a != $b` retourne `FALSE` au lieu de `TRUE` ! 
+La chaîne de caractères `'42'` est différente de l'entier `42`.
+
+**Bien :**
+
+La comparaison identique compare à la fois le type et la valeur.
+
+```php
+$a = '42';
+$b = 42;
+
+if ($a !== $b) {
+    // L'expression est vérifiée
+}
+```
+
+La comparaison `$a !== $b` retourne `TRUE`.
+
+**[⬆ retour en haut](#table-des-matières)**
+
+### L'opérateur Null coalescent
+
+L'opérateur Null coalescent `??` est un nouvel opérateur [introduit avec PHP 7](https://www.php.net/manual/fr/migration70.new-features.php#migration70.new-features.null-coalesce-op).
+Il a été ajouté comme sucre syntaxique destiné aux cas courants d'utilisation d'un ternaire en conjonction avec `isset()`. 
+
+L'opérateur Null coalescent retourne le premier opérande s'il existe et n'est pas `null`, le second le cas échéant.
+
+**Pas bien :**
+
+```php
+if (isset($_GET['name'])) {
+    $name = $_GET['name'];
+} elseif (isset($_POST['name'])) {
+    $name = $_POST['name'];
+} else {
+    $name = 'nobody';
+}
+```
+
+**Bien :**
+```php
+$name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
+```
+
+**[⬆ retour en haut](#table-des-matières)**
+
 
 ## Fonctions
 
@@ -1344,6 +1412,72 @@ $car->setColor('pink');
 $car->setMake('Ford');
 $car->setModel('F-150');
 $car->dump();
+```
+
+**[⬆ retour en haut](#table-des-matières)**
+
+### Préférer les classes finales
+
+Le mot-clé `final` devrait être utilisé dès que possible :
+
+1. Il empêche les chaînes d'héritage incontrôlées.
+2. Il encourage la [composition](#Préférer-la-composition-à-lhéritage).
+3. Il encourage le [principe de responsabilité unique](#Principe-de-Responsabilité-Unique).
+4. Il encourage les développeurs à utiliser vos méthodes publiques plutôt que d'étendre la classe afin d'avoir accès aux méthodes protégées. 
+5. Il vous permet de modifier votre code sans *casser* les applications utilisant votre classe.
+
+Seule condition, votre classe doit implémenter une interface et aucune autre méthode publique ne doit être définie.
+
+Pour plus d'informations, vous pouvez lire cet [article de blog](https://ocramius.github.io/blog/when-to-declare-classes-final/) 
+écrit par [Marco Pivetta (Ocramius)](https://ocramius.github.io/).
+
+**Pas bon :**
+
+```php
+final class Car
+{
+    private $color;
+
+    public function __construct($color)
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @return string The color of the vehicle
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+}
+```
+
+**Bon :**
+
+```php
+interface Vehicle
+{
+    /**
+     * @return string The color of the vehicle
+     */
+    public function getColor();
+}
+
+final class Car implements Vehicle
+{
+    private $color;
+
+    public function __construct($color)
+    {
+        $this->color = $color;
+    }
+
+    public function getColor()
+    {
+        return $this->color;
+    }
+}
 ```
 
 **[⬆ retour en haut](#table-des-matières)**
