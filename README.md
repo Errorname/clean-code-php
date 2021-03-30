@@ -17,7 +17,7 @@ Traduction en français de [Clean Code PHP](https://github.com/jupeter/clean-cod
      * [Ne pas ajouter de contexte inutile](#ne-pas-ajouter-de-contexte-inutile)
      * [Utiliser des arguments par défaut à la place des court-circuits ou des conditions](#utiliser-des-arguments-par-défaut-à-la-place-des-court-circuits-ou-des-conditions)
   3. [Comparaison](#comparaison)
-     * [Utiliser les comparaisons identiques](#use-identical-comparison)
+     * [Utiliser les comparaisons identiques](#Utiliser-les-comparaisons-identiques)
      * [L'opérateur Null coalescent](#Lopérateur-null-coalescent)
   4. [Fonctions](#fonctions)
 	 * [Arguments de fonction (idéalement 2 ou moins)](#arguments-de-fonction-idéalement-2-ou-moins)
