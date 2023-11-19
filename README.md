@@ -1675,7 +1675,7 @@ class HttpRequester
 
 ### Principe de Substitution de Liskov
 
-Il s'agit d'un terme effrayant pour un concept vraiment simple. Il définit formellement que "Si S est un sous-type de T, alors les objets de type T peuvent être remplacés par des objets de type S (càd, les objets de type S peuvent remplacer les objets de type T) sans altérer aucunes des propriétés désirées du programme (exactitude, tâche effectuée, etc.)." C'est un définition encore plus effrayante.
+Il s'agit d'un terme effrayant pour un concept vraiment simple. Il définit formellement que "Si S est un sous-type de T, alors les objets de type T peuvent être remplacés par des objets de type S (càd, les objets de type S peuvent remplacer les objets de type T) sans altérer aucunes des propriétés désirées du programme (exactitude, tâche effectuée, etc.)." C'est une définition encore plus effrayante.
 
 La meilleure explication est que si vous avez une classe mère et une classe fille, alors elles peuvent être interchangées sans produire de résultats incorrect. Cela est peut-être encore un peu confus, alors regardant l'exemple classique Carré-Rectangle. Mathématiquement, un carré est un rectangle, mais si vous le modelisez avec une relation "est-un" par l'héritage, vous pouvez rapidement avoir des problèmes.
 
@@ -1788,20 +1788,20 @@ class Square extends Shape
 }
 
 /**
- * @param Rectangle[] $rectangles
+ * @param Shape[] $rectangles
  */
-function renderLargeRectangles(array $rectangles): void
+function renderLargeRectangles(array $shapes): void
 {
-    foreach ($rectangles as $rectangle) {
-        if ($rectangle instanceof Square) {
-            $rectangle->setLength(5);
-        } elseif ($rectangle instanceof Rectangle) {
-            $rectangle->setWidth(4);
-            $rectangle->setHeight(5);
+    foreach ($shapes as $shape) {
+        if ($shape instanceof Square) {
+            $shape->setLength(5);
+        } elseif ($shape instanceof Rectangle) {
+            $shape->setWidth(4);
+            $shape->setHeight(5);
         }
 
-        $area = $rectangle->getArea();
-        $rectangle->render($area);
+        $area = $shape->getArea();
+        $shape->render($area);
     }
 }
 
