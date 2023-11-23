@@ -830,10 +830,10 @@ Et maintenant vous devrez utiliser l'instance de `Configuration` dans votre appl
 ### Ne pas utiliser le pattern Singleton
 
 Singleton est un [anti-pattern](https://fr.wikipedia.org/wiki/Singleton_(patron_de_conception)). Paraphrasé de Brian Button:
- 1. Ils sont principalement utilisé comme des **instances globales**, pourquoi ce n'est pas bien ? Car **vous cachez les dépendances** de votre application dans votre code, au lieu de les proposer au travers d'interfaces. Rendre quelque chose global pour éviter de le faire circuler est un "[code smell](https://fr.wikipedia.org/wiki/Code_smell)" (ou "mauvaise odeur").
+ 1. Ils sont principalement utilisés comme des **instances globales**, pourquoi ce n'est pas bien ? Car **vous cachez les dépendances** de votre application dans votre code, au lieu de les proposer au travers d'interfaces. Rendre quelque chose global pour éviter de le faire circuler est un "[code smell](https://fr.wikipedia.org/wiki/Code_smell)" (ou "mauvaise odeur").
  2. Ils enfreignent le [principe de responsabilité unique](#principe-de-responsabilité-unique): car ils sont **responsables de leur propre création et cycle de vie**.
  3. Ils provoquent intrinsèquement le [couplage](https://fr.wikipedia.org/wiki/Couplage_(informatique)) étroit du code. Cela rend leur simulation pour le **test plutôt difficile** dans de nombreux cas.
- 4. Ils transportent un état durant le cycle de vide de l'application. Encore une difficulté pour le test car vous pourrez arriver dans une situation où **les tests auront besoin d'un ordre précis**, ce qui est totalement déconseillé pour les tests unitaires. Pourquoi ? Car chaque test unitaire devrait être indépendant des autres.
+ 4. Ils transportent un état durant le cycle de vie de l'application. Encore une difficulté pour le test car vous pouvez arriver dans une situation où **les tests auront besoin d'un ordre précis**, ce qui est totalement déconseillé pour les tests unitaires. Pourquoi ? Car chaque test unitaire devrait être indépendant des autres.
 
 Vous pourrez aussi trouver de bonnes reflexions par [Misko Hevery](http://misko.hevery.com/about/) sur [la racine du problème](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
 
@@ -1177,10 +1177,10 @@ peut facilement compter sur elles et vous ne pouvez pas controler quel code comp
 **Les modifications dans les classes sont dangereuses pour tous les utilisateurs de la classe.**
 * Le modificateur `protected` est aussi dangereux que `public`, car ils sont disponible à la portée
 de n'importe quelle classe fille. Ainsi, la seule différence entre public et protected est dans
-le méchanisme d'accès, mais l'encapsulation reste la même.
+le mécanisme d'accès, mais l'encapsulation reste la même.
 **Les modifications dans les classes sont dangereuses pour toutes les descendantes.**
-* Le modificateur `private` guaranti que le le code est
-**dangereux à modifier seulement dans la limite d'une classe unique**
+* Le modificateur `private` garantit que le code est
+**dangereux à modifier uniquement à l'extérieur d'une classe unique**
 (vous êtes en sécurité pour les modifications et vous n'avez pas
 l'[effet Jenga](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
 
@@ -1564,7 +1564,7 @@ class UserSettings
 
 ### Principe Ouvert/Fermé
 
-Tel qu'énoncé par Bertrand Meye, "les entitées logicielles (classes, modules, fonctions, etc.) devraient être ouverts aux extension, mais fermé aux modifications." Qu'est ce que cela veut dire cependant ? Ce principe énonce essentiellement que vous devriez autoriser les utilisateurs à ajouter de nouvelles fonctionnalités sans les autoriser à modifier le code existant.
+Tel qu'énoncé par Bertrand Meye, "les entités logicielles (classes, modules, fonctions, etc.) devraient être ouvertes aux extensions, mais fermées aux modifications." Qu'est ce que cela veut dire cependant ? Ce principe énonce essentiellement que vous devriez autoriser les utilisateurs à ajouter de nouvelles fonctionnalités sans les autoriser à modifier le code existant.
 
 **Mauvais:**
 
